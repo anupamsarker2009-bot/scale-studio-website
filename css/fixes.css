@@ -1,0 +1,353 @@
+/* ============================================
+   Scale Studio - Standalone Fixes
+   Overrides for Webflow export to work locally
+   ============================================ */
+
+/* --- Fix all elements hidden by Webflow IX2 animations --- */
+/* Commented out so JS can handle the animations
+[style*="opacity: 0"],
+[style*="opacity:0"] {
+  opacity: 1 !important;
+} */
+
+/* --- Hamburger Menu Icon (replaces Lottie) --- */
+.hamburger {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 2px;
+  background-color: #0d0d0d;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* --- FAQ Arrow (replaces Lottie) --- */
+.faq-arrow {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.faq-arrow::before,
+.faq-arrow::after {
+  content: '';
+  position: absolute;
+  background-color: #0d0d0d;
+  transition: all 0.3s ease;
+}
+
+.faq-arrow::before {
+  width: 16px;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.faq-arrow::after {
+  width: 2px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.w-dropdown.w--open .faq-arrow::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+/* --- Marquee Animations --- */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-scroll-reverse {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.marquee-partner {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-partner .partner-logos {
+  animation: marquee-scroll 20s linear infinite;
+}
+
+.case-marquee {
+  overflow: hidden;
+}
+
+.case-marquee .case-items {
+  animation: marquee-scroll 25s linear infinite;
+}
+
+.integration-marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.integration-marquee .integration-items {
+  animation: marquee-scroll 18s linear infinite;
+}
+
+/* --- Testimonial Marquee --- */
+.testimonials-bottom {
+  overflow: hidden;
+}
+
+.testimonials-bottom .testimonial-items {
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.testimonials-bottom .testimonial-items:nth-child(2) {
+  animation: marquee-scroll 35s linear infinite;
+}
+
+.testimonials-bottom .testimonial-items:nth-child(3) {
+  animation: marquee-scroll 25s linear infinite;
+}
+
+/* --- Counter Animation Reset (show final values) --- */
+.cta-counters._01 {
+  transform: translate3d(0, -91%, 0) !important;
+}
+
+.cta-counters._02 {
+  transform: translate3d(0, -91%, 0) !important;
+}
+
+/* --- Smooth Hover Effects --- */
+.case-link:hover .case-image {
+  transform: scale(1.03) !important;
+  transition: transform 0.4s ease;
+}
+
+.case-link .case-detail {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.case-link:hover .case-detail {
+  opacity: 1 !important;
+}
+
+.case-image {
+  transition: transform 0.4s ease;
+}
+
+/* --- Primary Button Hover Animation --- */
+.button-text,
+.button-arrow {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  display: block !important;
+}
+
+.primary-button:hover .button-text,
+.primary-button:hover .button-arrow {
+  transform: translateY(-100%);
+}
+/* --- Secondary Button Hover --- */
+.secondary-button:hover .secondary-arrow {
+  transform: translateX(4px);
+  transition: transform 0.3s ease;
+}
+
+.secondary-arrow {
+  transition: transform 0.3s ease;
+}
+
+/* --- Service Card Hover Effects --- */
+.service-card {
+  transition: all 0.3s ease;
+}
+
+.service-card .service-image {
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.05) !important;
+}
+
+/* --- Member Card Hover --- */
+.member-card .member-image {
+  transition: transform 0.4s ease;
+}
+
+.member-card:hover .member-image {
+  transform: scale(1.05);
+}
+
+/* --- Team Social Hover --- */
+.team-social {
+  transition: opacity 0.3s ease;
+}
+
+.overflow-hidden.team:hover .team-social {
+  opacity: 1;
+}
+
+/* --- Pause Icon Hover --- */
+.revenue-lightbox .pause-icon {
+  transition: transform 0.3s ease;
+}
+
+.revenue-lightbox:hover .pause-icon {
+  transform: scale(1.15) !important;
+}
+
+/* --- Range Slider Animation --- */
+@keyframes range-slide {
+  0% { width: 0%; }
+  100% { width: 70%; }
+}
+
+.range-box {
+  animation: range-slide 2s ease-out forwards;
+}
+
+/* --- Check Button Hover --- */
+.check-button {
+  transition: all 0.3s ease;
+}
+
+.check-button:hover .check-arrow {
+  transform: translateX(4px);
+  transition: transform 0.3s ease;
+}
+
+.check-arrow {
+  transition: transform 0.3s ease;
+}
+
+/* --- CTA Line Animation --- */
+@keyframes cta-line-grow {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+.cta-line {
+  animation: cta-line-grow 1.5s ease-out forwards;
+}
+
+/* --- Sub Arrow Spin --- */
+.sub-arrow {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* --- Performance Icon Spin --- */
+.performance-icon {
+  animation: spin 4s linear infinite;
+}
+
+/* --- Behind Plus Spin --- */
+.behind-plus {
+  animation: spin 6s linear infinite;
+}
+
+/* --- Dropdown Navigation Fixes --- */
+.dd-navigation {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.w-dropdown:hover .dd-navigation,
+.w-dropdown.w--open .dd-navigation {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- Pricing Tab Active State --- */
+.pricing-tab.w--current {
+  font-weight: 600;
+}
+
+/* --- Slider Navigation --- */
+.left-arrow,
+.right-arrow {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.left-arrow:hover,
+.right-arrow:hover {
+  opacity: 0.7;
+}
+
+/* --- Fix cart display --- */
+.w-commerce-commercecartcontainerwrapper {
+  display: none !important;
+}
+
+/* --- Smooth page load --- */
+.page-wrapper {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- Rating Arrow Animation --- */
+.rating-arrow {
+  animation: spin 4s linear infinite;
+}
+
+/* --- Choose Card Images --- */
+.choose-abs {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* --- Hide Webflow Badge and Banner --- */
+.w-webflow-badge,
+.website-banner-wrapper {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
