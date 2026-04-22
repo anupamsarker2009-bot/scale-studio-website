@@ -82,20 +82,27 @@
 /* --- Marquee Animations --- */
 @keyframes marquee-scroll {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
 @keyframes marquee-scroll-reverse {
   0% {
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
+}
+
+.partner-logos, .case-items, .integration-items, .testimonial-items {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .marquee-partner {
@@ -148,6 +155,86 @@
 
 .cta-counters._02 {
   transform: translate3d(0, -91%, 0) !important;
+}
+
+/* --- Anti-Jitter: GPU compositing for all animated elements --- */
+[data-w-id] {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* --- Stabilize IX2 scroll-triggered animated sections --- */
+.section {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  isolation: isolate;
+}
+
+/* --- Prevent layout reflow jitter from IX2 opacity animations --- */
+[data-w-id][style*="opacity"] {
+  will-change: opacity, transform;
+  transition: opacity 0.6s ease, transform 0.6s ease !important;
+}
+
+/* --- Smooth out choose/success/pricing/testimonials sections --- */
+.choose-card,
+.success-card,
+.pricing-card,
+.choose-bottom,
+.success-bottom {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* --- Fix CTA card counter jitter --- */
+.cta-animation,
+.cta-nums,
+.cta-counters,
+.cta-counter {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* --- Testimonial section anti-jitter --- */
+.testimonials-bottom {
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
+.testimonial-items {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* --- FAQ section anti-jitter --- */
+.faq-list {
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+/* --- Rating/counter digit elements --- */
+.rating-num,
+.cta-num-item {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* --- Prevent sub-arrow spin jitter --- */
+.sub-arrow,
+.performance-icon,
+.behind-plus,
+.rating-arrow {
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* --- Smooth Hover Effects --- */

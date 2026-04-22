@@ -201,6 +201,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // =========================================
   // 6. COUNTER ANIMATIONS (Scroll-triggered)
   // =========================================
+
+  // Initialize BOTH counter groups to starting position
+  document.querySelectorAll('.cta-counters').forEach(function (el) {
+    el.style.transform = 'translate3d(0, 0%, 0)';
+    el.style.willChange = 'transform';
+  });
+
   function animateCounters() {
     var counterGroups = document.querySelectorAll('.cta-counters');
 
@@ -210,8 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (group.dataset.animated) return;
         group.dataset.animated = 'true';
 
-        var targetY = group.classList.contains('_01') ? -91 : -91;
-        var current = 0;
+        var targetY = -91;
         var duration = 1500;
         var start = performance.now();
 
@@ -234,17 +240,68 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Initial counter positions
-  document.querySelectorAll('.cta-counters._01').forEach(function (el) {
-    el.style.transform = 'translate3d(0, 0%, 0)';
-  });
-
-  window.addEventListener('scroll', animateCounters, { passive: true });
-  setTimeout(animateCounters, 500);
+  // Throttle scroll with rAF to prevent jitter
+  var scrollTicking = false;
+  window.addEventListener('scroll', function () {
+    if (!scrollTicking) {
+      requestAnimationFrame(function () {
+        animateCounters();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }, { passive: true });
+  setTimeout(animateCounters, 300);
 
   // =========================================
-  // 7. SCROLL-TRIGGERED FADE-IN ANIMATIONS (Removed to prevent conflicts with Webflow IX2)
+  // 7. IX2 JITTER SMOOTHER
+  // Intercepts Webflow IX2 abrupt opacity/transform changes
+  // and applies smooth CSS transitions instead
   // =========================================
+  (function () {
+    // Elements that IX2 fades in — give them smooth transitions
+    // so instead of popping in, they glide in
+    var ix2Selectors = [
+      '.success-title', '.choose-title', '.choose-para', '.choose-buttons',
+      '.choose-card', '.choose-bottom', '.pricing-left', '.pricing-bottom',
+      '.testimonials-top', '.testimonials-bottom', '.faq-top', '.cta-left',
+      '.cta-card', '.cta-line', '.footer-top', '.footer-bottom',
+      '.success-left', '.integration-left'
+    ];
+
+    ix2Selectors.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (el) {
+        // Pre-apply transition so IX2 changes animate smoothly
+        if (!el.style.transition || el.style.transition === '') {
+          el.style.transition = 'opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }
+        el.style.willChange = 'opacity, transform';
+      });
+    });
+
+    // Use MutationObserver to catch IX2 abrupt style injections
+    // and smooth them out
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          var el = mutation.target;
+          // If element has no transition, add one
+          var style = el.style;
+          if (style && !style.transition) {
+            style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          }
+        }
+      });
+    });
+
+    // Observe the main content area
+    var mainContent = document.querySelector('.page-wrapper') || document.body;
+    observer.observe(mainContent, {
+      attributes: true,
+      attributeFilter: ['style'],
+      subtree: true
+    });
+  })();
 
   // =========================================
   // 8. LIGHTBOX for video
