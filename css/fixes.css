@@ -4,11 +4,11 @@
    ============================================ */
 
 /* --- Fix all elements hidden by Webflow IX2 animations --- */
-/* Commented out so JS can handle the animations
 [style*="opacity: 0"],
 [style*="opacity:0"] {
   opacity: 1 !important;
-} */
+  visibility: visible !important;
+}
 
 /* --- Hamburger Menu Icon (replaces Lottie) --- */
 .hamburger {

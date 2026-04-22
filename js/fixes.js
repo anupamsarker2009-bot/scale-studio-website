@@ -260,6 +260,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // =========================================
   if (window.Webflow && window.Webflow.require('ix2')) {
     window.Webflow.require('ix2').destroy();
+    
+    // Webflow IX2 initially hides animated elements with opacity: 0. 
+    // Since we destroyed IX2, we must manually make them visible.
+    document.querySelectorAll('[data-w-id]').forEach(function (el) {
+      el.style.opacity = '1';
+      el.style.transform = '';
+      el.style.visibility = 'visible';
+    });
   }
 
   // =========================================
