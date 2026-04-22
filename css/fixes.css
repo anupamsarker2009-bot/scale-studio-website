@@ -165,11 +165,6 @@
   isolation: isolate;
 }
 
-/* --- Prevent layout reflow jitter from IX2 opacity animations --- */
-[data-w-id][style*="opacity"] {
-  will-change: opacity, transform;
-}
-
 /* --- Smooth out choose/success/pricing/testimonials sections --- */
 .choose-card,
 .success-card,

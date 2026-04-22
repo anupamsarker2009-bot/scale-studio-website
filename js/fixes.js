@@ -256,7 +256,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // =========================================
   // 7. IX2 FIXES
   // Cleaned up previous observer that conflicted with IX2
+  // Completely destroy Webflow IX2 to stop scroll jitter
   // =========================================
+  if (window.Webflow && window.Webflow.require('ix2')) {
+    window.Webflow.require('ix2').destroy();
+  }
 
   // =========================================
   // 8. LIGHTBOX for video
