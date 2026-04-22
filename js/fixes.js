@@ -254,54 +254,9 @@ document.addEventListener('DOMContentLoaded', function () {
   setTimeout(animateCounters, 300);
 
   // =========================================
-  // 7. IX2 JITTER SMOOTHER
-  // Intercepts Webflow IX2 abrupt opacity/transform changes
-  // and applies smooth CSS transitions instead
+  // 7. IX2 FIXES
+  // Cleaned up previous observer that conflicted with IX2
   // =========================================
-  (function () {
-    // Elements that IX2 fades in — give them smooth transitions
-    // so instead of popping in, they glide in
-    var ix2Selectors = [
-      '.success-title', '.choose-title', '.choose-para', '.choose-buttons',
-      '.choose-card', '.choose-bottom', '.pricing-left', '.pricing-bottom',
-      '.testimonials-top', '.testimonials-bottom', '.faq-top', '.cta-left',
-      '.cta-card', '.cta-line', '.footer-top', '.footer-bottom',
-      '.success-left', '.integration-left'
-    ];
-
-    ix2Selectors.forEach(function (sel) {
-      document.querySelectorAll(sel).forEach(function (el) {
-        // Pre-apply transition so IX2 changes animate smoothly
-        if (!el.style.transition || el.style.transition === '') {
-          el.style.transition = 'opacity 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        }
-        el.style.willChange = 'opacity, transform';
-      });
-    });
-
-    // Use MutationObserver to catch IX2 abrupt style injections
-    // and smooth them out
-    var observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-          var el = mutation.target;
-          // If element has no transition, add one
-          var style = el.style;
-          if (style && !style.transition) {
-            style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-          }
-        }
-      });
-    });
-
-    // Observe the main content area
-    var mainContent = document.querySelector('.page-wrapper') || document.body;
-    observer.observe(mainContent, {
-      attributes: true,
-      attributeFilter: ['style'],
-      subtree: true
-    });
-  })();
 
   // =========================================
   // 8. LIGHTBOX for video

@@ -140,14 +140,6 @@
   animation: marquee-scroll 30s linear infinite;
 }
 
-.testimonials-bottom .testimonial-items:nth-child(2) {
-  animation: marquee-scroll 35s linear infinite;
-}
-
-.testimonials-bottom .testimonial-items:nth-child(3) {
-  animation: marquee-scroll 25s linear infinite;
-}
-
 /* --- Counter Animation Reset (show final values) --- */
 .cta-counters._01 {
   transform: translate3d(0, -91%, 0) !important;
@@ -176,7 +168,6 @@
 /* --- Prevent layout reflow jitter from IX2 opacity animations --- */
 [data-w-id][style*="opacity"] {
   will-change: opacity, transform;
-  transition: opacity 0.6s ease, transform 0.6s ease !important;
 }
 
 /* --- Smooth out choose/success/pricing/testimonials sections --- */
