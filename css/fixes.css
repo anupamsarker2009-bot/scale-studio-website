@@ -417,6 +417,16 @@
   50% { transform: translateY(-10px); }
 }
 
+/* --- Brand Logo Size Fix --- */
+.brand-image {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 /* --- Hide Webflow Badge and Banner --- */
 .w-webflow-badge,
 .website-banner-wrapper {
