@@ -519,9 +519,7 @@ html {
 
 /* --- Fix testimonial section overflow --- */
 .testimonials-bottom {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: block;
 }
 
 /* --- SEO: ensure content is accessible --- */
