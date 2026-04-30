@@ -229,9 +229,12 @@
   transition: transform 0.4s ease;
 }
 
+/* Case detail is visible by default; enhance on hover */
 .case-link .case-detail {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.3s ease;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+  padding: 16px;
 }
 
 .case-link:hover .case-detail {
@@ -362,6 +365,11 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+  background: white;
 }
 
 .w-dropdown:hover .dd-navigation,
@@ -419,12 +427,11 @@
 
 /* --- Brand Logo Size Fix --- */
 .brand-image {
-  height: 40px;
-  width: 40px;
-  object-fit: cover;
+  height: 36px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
   display: block;
-  border-radius: 50%;
-  overflow: hidden;
 }
 
 /* --- Hide Webflow Badge and Banner --- */
@@ -433,4 +440,92 @@
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
+}
+
+/* --- Smooth scrolling --- */
+html {
+  scroll-behavior: smooth;
+}
+
+/* --- Mobile nav menu fix --- */
+@media (max-width: 991px) {
+  .nav-menu.w--open {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #fff;
+    z-index: 10000;
+    padding: 80px 24px 24px;
+    overflow-y: auto;
+    gap: 16px;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .nav-menu-wrap {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .nav-link {
+    font-size: 18px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .tab-menus {
+    display: none;
+  }
+}
+
+/* --- Pricing tab scroll on small screens --- */
+@media (max-width: 768px) {
+  .pricing-tabs-menu {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .pricing-tabs-menu::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* --- Navbar z-index fix --- */
+.navbar {
+  position: relative;
+  z-index: 1000;
+}
+
+/* --- Dropdown proper position --- */
+.w-dropdown {
+  position: relative;
+}
+
+/* --- Fix TWO dollar signs in pricing --- */
+/* The plan-price-flex contains: <p class="from-text">$</p><h4 class="plan-price">$1,290</h4> */
+/* We hide the standalone $ p tag since the price already has $ */
+.plan-price-flex > .from-text {
+  display: none;
+}
+
+
+/* --- Fix testimonial section overflow --- */
+.testimonials-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* --- SEO: ensure content is accessible --- */
+.case-detail {
+  position: relative;
+  z-index: 2;
 }
