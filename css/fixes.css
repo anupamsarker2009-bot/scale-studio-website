@@ -4,8 +4,11 @@
    ============================================ */
 
 /* --- Remove default browser link underlines & blue color --- */
-a {
-  text-decoration: none;
+a,
+a:hover,
+a:visited,
+a:active {
+  text-decoration: none !important;
   color: inherit;
 }
 
