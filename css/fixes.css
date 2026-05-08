@@ -12,12 +12,7 @@ a:active {
   color: inherit;
 }
 
-/* --- Fix all elements hidden by Webflow IX2 animations --- */
-[style*="opacity: 0"],
-[style*="opacity:0"] {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
+/* --- GPU compositing for animated elements (anti-jitter) --- */
 
 /* --- Hamburger Menu Icon (replaces Lottie) --- */
 .hamburger {

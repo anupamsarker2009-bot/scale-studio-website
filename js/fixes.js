@@ -254,21 +254,23 @@ document.addEventListener('DOMContentLoaded', function () {
   setTimeout(animateCounters, 300);
 
   // =========================================
-  // 7. IX2 FIXES
-  // Cleaned up previous observer that conflicted with IX2
-  // Completely destroy Webflow IX2 to stop scroll jitter
+  // 7. IX2 FALLBACK (only if IX2 not available)
+  // DO NOT destroy IX2 — let Webflow animations run normally.
+  // Only reveal elements as a fallback if IX2 fails to initialize.
   // =========================================
-  if (window.Webflow && window.Webflow.require('ix2')) {
-    window.Webflow.require('ix2').destroy();
-    
-    // Webflow IX2 initially hides animated elements with opacity: 0. 
-    // Since we destroyed IX2, we must manually make them visible.
-    document.querySelectorAll('[data-w-id]').forEach(function (el) {
-      el.style.opacity = '1';
-      el.style.transform = '';
-      el.style.visibility = 'visible';
-    });
-  }
+  setTimeout(function () {
+    // If IX2 ran, it will have cleared opacity:0 on its own.
+    // This is a safety net for elements left invisible after 2s.
+    if (!window.Webflow || !window.Webflow.require || !window.Webflow.require('ix2')) {
+      document.querySelectorAll('[data-w-id]').forEach(function (el) {
+        var style = window.getComputedStyle(el);
+        if (style.opacity === '0') {
+          el.style.opacity = '1';
+          el.style.visibility = 'visible';
+        }
+      });
+    }
+  }, 2000);
 
   // =========================================
   // 8. LIGHTBOX for video
