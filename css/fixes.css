@@ -161,59 +161,56 @@ a:active {
   transform: translate3d(0, -91%, 0) !important;
 }
 
-/* --- Anti-Jitter: GPU compositing for all animated elements --- */
+/* --- Anti-Jitter: GPU promotion WITHOUT conflicting with IX2 transforms ---
+   Using will-change instead of transform:translateZ(0) so that IX2 can
+   still apply its own transforms freely on scroll. --- */
 [data-w-id] {
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  will-change: transform, opacity;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-/* --- Stabilize IX2 scroll-triggered animated sections --- */
+/* --- Sections: isolate compositing layers, no forced transform --- */
 .section {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   isolation: isolate;
+  contain: layout style;
 }
 
-/* --- Smooth out choose/success/pricing/testimonials sections --- */
+/* --- Cards: promote to GPU layer --- */
 .choose-card,
 .success-card,
 .pricing-card,
 .choose-bottom,
 .success-bottom {
   will-change: transform, opacity;
-  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-/* --- Fix CTA card counter jitter --- */
+/* --- CTA counter: GPU layer --- */
 .cta-animation,
 .cta-nums,
 .cta-counters,
 .cta-counter {
   will-change: transform;
-  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* --- Testimonial section anti-jitter --- */
+/* --- Testimonial: isolate but let the CSS animation control transform --- */
 .testimonials-bottom {
-  transform: translateZ(0);
   isolation: isolate;
+  overflow: hidden;
 }
 
 .testimonial-items {
   will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* --- FAQ section anti-jitter --- */
+/* --- FAQ section --- */
 .faq-list {
-  transform: translateZ(0);
   will-change: auto;
 }
 
