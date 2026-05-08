@@ -3,6 +3,12 @@
    Overrides for Webflow export to work locally
    ============================================ */
 
+/* --- Remove default browser link underlines & blue color --- */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* --- Fix all elements hidden by Webflow IX2 animations --- */
 [style*="opacity: 0"],
 [style*="opacity:0"] {
