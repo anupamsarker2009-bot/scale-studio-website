@@ -364,5 +364,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // =========================================
+  // 13. INFINITE TESTIMONIAL MARQUEE
+  // Duplicate cards so the loop is seamless
+  // =========================================
+  var testimonialRow = document.querySelector('.testimonials-bottom .testimonial-items');
+  if (testimonialRow) {
+    var cards = testimonialRow.querySelectorAll('.testimonial-card');
+    cards.forEach(function (card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      testimonialRow.appendChild(clone);
+    });
+  }
+
   console.log('Scale Studio - Site initialized successfully ✓');
 });
