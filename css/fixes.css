@@ -526,6 +526,11 @@ html {
   display: block;
 }
 
+/* --- Show only ONE testimonial row --- */
+.testimonials-bottom .testimonial-items:not(:first-child) {
+  display: none !important;
+}
+
 /* --- SEO: ensure content is accessible --- */
 .case-detail {
   position: relative;
